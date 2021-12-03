@@ -13,6 +13,24 @@
           <Property Name="Title" Type="varchar" MaxLength="50" />
           <Property Name="Credits" Type="int" />
         </EntityType>
+        <EntityType Name="Instructors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="FirstMidName" Type="varchar" MaxLength="50" />
+          <Property Name="HireDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="FirstMidName" Type="varchar" MaxLength="50" />
+          <Property Name="EnrollmentDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="id" />
@@ -25,6 +43,8 @@
         </EntityType>
         <EntityContainer Name="UniversityReactModelStoreContainer">
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Instructors" EntityType="Self.Instructors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -34,6 +54,8 @@
         <EntityContainer Name="UniversityReactEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="UniversityReactModel.Users" />
           <EntitySet Name="Courses" EntityType="UniversityReactModel.Courses" />
+          <EntitySet Name="Instructors" EntityType="UniversityReactModel.Instructors" />
+          <EntitySet Name="Students" EntityType="UniversityReactModel.Students" />
         </EntityContainer>
         <EntityType Name="Users">
           <Key>
@@ -52,6 +74,24 @@
           <Property Name="CourseID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Credits" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Instructors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstMidName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HireDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstMidName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -76,6 +116,26 @@
                 <ScalarProperty Name="Credits" ColumnName="Credits" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Instructors">
+            <EntityTypeMapping TypeName="UniversityReactModel.Instructors">
+              <MappingFragment StoreEntitySet="Instructors">
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="FirstMidName" ColumnName="FirstMidName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="UniversityReactModel.Students">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+                <ScalarProperty Name="FirstMidName" ColumnName="FirstMidName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

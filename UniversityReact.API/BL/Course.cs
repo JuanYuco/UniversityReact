@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using UniversityReact.API.Data;
 
@@ -35,6 +37,78 @@ namespace UniversityReact.API.BL
             catch (Exception e)
             {
                 return null;
+            }
+        }
+
+        public async Task<Models.Course> CreateCourse(Models.Course courseModel)
+        {
+            try
+            {
+                var course = db.Courses.Add( new Data.Courses { 
+                    CourseID = courseModel.CourseID,
+                    Title = courseModel.Title,
+                    Credits = courseModel.Credits
+                });
+
+                await db.SaveChangesAsync();
+
+                courseModel.CourseID = course.CourseID;
+                return courseModel;
+            }catch( Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Models.Course> getCourseById(int id)
+        {
+            try
+            {
+                var course = await db.Courses.FindAsync(id);
+                if (course == null) return null;
+
+                return new Models.Course
+                {
+                    CourseID = course.CourseID,
+                    Title = course.Title,
+                    Credits = course.Credits
+                };
+            }catch ( Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Models.Course> UpdateCourse(Models.Course course)
+        {
+            try
+            {
+                db.Courses.AddOrUpdate( new Data.Courses { 
+                    CourseID = course.CourseID,
+                    Title = course.Title,
+                    Credits = course.Credits
+                });
+
+                await db.SaveChangesAsync();
+                return course;
+            } catch(Exception e)
+            {
+                return null;
+            }
+        }
+
+        public bool DeleteCourse(int id)
+        {
+            try
+            {
+                var courseData = db.Courses.Find(id);
+                db.Courses.Remove(courseData);
+
+                db.SaveChanges();
+                return true;
+            } catch(Exception e)
+            {
+                return false;
             }
         }
     }

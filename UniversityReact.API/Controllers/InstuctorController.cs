@@ -9,12 +9,12 @@ using System.Web.Http;
 namespace UniversityReact.API.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/Course")]
-    public class CourseController : ApiController
+    [RoutePrefix("api/Instructor")]
+    public class InstuctorController : ApiController
     {
-        private BL.Course course = new BL.Course();
+        private BL.Instructor instructor = new BL.Instructor();
         private const string INTERNAL_SERVER_ERROR_MSG = "Hubo un error interno por favor contacte al administrador";
-        private const string BAD_REQUEST_ID = "No existe un curso con el id suministrado";
+        private const string BAD_REQUEST_ID = "No existe un instructor con el id suministrado";
 
         [HttpGet]
         [Route("GetAll")]
@@ -22,9 +22,10 @@ namespace UniversityReact.API.Controllers
         {
             try
             {
-                var courses = course.GetCourses();
-                return Ok(courses);
-            }catch(Exception e)
+                var instructos = instructor.GetInstrutors();
+                return Ok(instructos);
+            }
+            catch (Exception e)
             {
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
@@ -32,23 +33,24 @@ namespace UniversityReact.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public async Task<IHttpActionResult> Create(Models.Course courseModel)
+        public async Task<IHttpActionResult> Create(Models.Instructor instructorModel)
         {
             try
             {
-                if ( !ModelState.IsValid )
+                if (!ModelState.IsValid)
                 {
-                    return BadRequest( ModelState );
+                    return BadRequest(ModelState);
                 }
 
-                var courseAdd = await course.CreateCourse(courseModel);
-                if ( courseAdd == null )
+                var isntructorAdd = await instructor.CreateInstructor(instructorModel);
+                if (isntructorAdd == null)
                 {
                     return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
                 }
 
-                return Ok(courseAdd);
-            } catch( Exception e)
+                return Ok(isntructorAdd);
+            }
+            catch (Exception e)
             {
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
@@ -60,11 +62,12 @@ namespace UniversityReact.API.Controllers
         {
             try
             {
-                var result = await course.getCourseById(id);
+                var result = await instructor.getIntructorById(id);
                 if (result == null) return BadRequest(BAD_REQUEST_ID);
 
                 return Ok(result);
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
@@ -72,7 +75,7 @@ namespace UniversityReact.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public async Task<IHttpActionResult> Update(Models.Course courseModel)
+        public async Task<IHttpActionResult> Update(Models.Instructor instructorModel)
         {
             try
             {
@@ -81,16 +84,17 @@ namespace UniversityReact.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if ( await course.getCourseById(courseModel.CourseID) == null )
+                if (await instructor.getIntructorById(instructorModel.ID) == null)
                 {
-                    return BadRequest("No existe un curso con el id suministrado en el modelo");
+                    return BadRequest("No existe un instructor con el id suministrado en el modelo");
                 }
 
-                var courseUpdate = await course.UpdateCourse(courseModel);
-                if ( courseUpdate == null ) InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
+                var instructorUpdate = await instructor.UpdateInstructor(instructorModel);
+                if (instructorUpdate == null) InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
 
-                return Ok(courseUpdate);
-            } catch (Exception e)
+                return Ok(instructorUpdate);
+            }
+            catch (Exception e)
             {
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
@@ -102,18 +106,19 @@ namespace UniversityReact.API.Controllers
         {
             try
             {
-                if ( await course.getCourseById(id) == null )
+                if (await instructor.getIntructorById(id) == null)
                 {
                     return BadRequest(BAD_REQUEST_ID);
                 }
 
-                if ( !course.DeleteCourse(id) )
+                if (!instructor.DeleteInstructor(id))
                 {
                     return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
                 }
 
                 return Ok();
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }

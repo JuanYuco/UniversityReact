@@ -5,8 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="944ce0fd679e47e1bf30e140dc074837" Name="Diagram1">
-        <EntityTypeShape EntityType="UniversityReactModel.Users" Width="1.5" PointX="2" PointY="1" />
-        <EntityTypeShape EntityType="UniversityReactModel.Courses" Width="1.5" PointX="5" PointY="1.375" />
+        <EntityTypeShape EntityType="UniversityReactModel.Users" Width="1.5" PointX="4.75" PointY="1" />
+        <EntityTypeShape EntityType="UniversityReactModel.Courses" Width="1.5" PointX="7.125" PointY="1" />
+        <EntityTypeShape EntityType="UniversityReactModel.Instructors" Width="1.5" PointX="2.75" PointY="1" />
+        <EntityTypeShape EntityType="UniversityReactModel.Students" Width="1.5" PointX="7.625" PointY="3.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
