@@ -12,13 +12,11 @@ namespace UniversityReact.API.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Instructors
+    public partial class OfficesAssignment
     {
-        public int ID { get; set; }
-        public string LastName { get; set; }
-        public string FirstMidName { get; set; }
-        public Nullable<System.DateTime> HireDate { get; set; }
+        public int InstructorID { get; set; }
+        public string Location { get; set; }
     
-        public virtual OfficesAssignment OfficesAssignment { get; set; }
+        public virtual Instructors Instructors { get; set; }
     }
 }

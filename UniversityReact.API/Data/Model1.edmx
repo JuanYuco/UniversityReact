@@ -22,6 +22,13 @@
           <Property Name="FirstMidName" Type="varchar" MaxLength="50" />
           <Property Name="HireDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="OfficesAssignment">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="int" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Students">
           <Key>
             <PropertyRef Name="ID" />
@@ -41,11 +48,28 @@
           <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
+        <Association Name="FK_OfficesAssignment_Instructor">
+          <End Role="Instructors" Type="Self.Instructors" Multiplicity="1" />
+          <End Role="OfficesAssignment" Type="Self.OfficesAssignment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Instructors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OfficesAssignment">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="UniversityReactModelStoreContainer">
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Instructors" EntityType="Self.Instructors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OfficesAssignment" EntityType="Self.OfficesAssignment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OfficesAssignment_Instructor" Association="Self.FK_OfficesAssignment_Instructor">
+            <End Role="Instructors" EntitySet="Instructors" />
+            <End Role="OfficesAssignment" EntitySet="OfficesAssignment" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -56,6 +80,11 @@
           <EntitySet Name="Courses" EntityType="UniversityReactModel.Courses" />
           <EntitySet Name="Instructors" EntityType="UniversityReactModel.Instructors" />
           <EntitySet Name="Students" EntityType="UniversityReactModel.Students" />
+          <EntitySet Name="OfficesAssignment" EntityType="UniversityReactModel.OfficesAssignment" />
+          <AssociationSet Name="FK_OfficesAssignment_Instructor" Association="UniversityReactModel.FK_OfficesAssignment_Instructor">
+            <End Role="Instructors" EntitySet="Instructors" />
+            <End Role="OfficesAssignment" EntitySet="OfficesAssignment" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Users">
           <Key>
@@ -83,6 +112,7 @@
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FirstMidName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HireDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OfficesAssignment" Relationship="UniversityReactModel.FK_OfficesAssignment_Instructor" FromRole="Instructors" ToRole="OfficesAssignment" />
         </EntityType>
         <EntityType Name="Students">
           <Key>
@@ -93,6 +123,26 @@
           <Property Name="FirstMidName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="OfficesAssignment">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Instructors" Relationship="UniversityReactModel.FK_OfficesAssignment_Instructor" FromRole="OfficesAssignment" ToRole="Instructors" />
+        </EntityType>
+        <Association Name="FK_OfficesAssignment_Instructor">
+          <End Type="UniversityReactModel.Instructors" Role="Instructors" Multiplicity="1" />
+          <End Type="UniversityReactModel.OfficesAssignment" Role="OfficesAssignment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Instructors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OfficesAssignment">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -136,6 +186,14 @@
                 <ScalarProperty Name="FirstMidName" ColumnName="FirstMidName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OfficesAssignment">
+            <EntityTypeMapping TypeName="UniversityReactModel.OfficesAssignment">
+              <MappingFragment StoreEntitySet="OfficesAssignment">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

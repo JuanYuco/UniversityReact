@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="UniversityReactModel.Courses" Width="1.5" PointX="7.125" PointY="1" />
         <EntityTypeShape EntityType="UniversityReactModel.Instructors" Width="1.5" PointX="2.75" PointY="1" />
         <EntityTypeShape EntityType="UniversityReactModel.Students" Width="1.5" PointX="7.625" PointY="3.125" />
+        <EntityTypeShape EntityType="UniversityReactModel.OfficesAssignment" Width="1.5" PointX="5" PointY="4.25" />
+        <AssociationConnector Association="UniversityReactModel.FK_OfficesAssignment_Instructor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
