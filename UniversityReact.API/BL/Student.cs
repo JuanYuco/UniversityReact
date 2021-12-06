@@ -38,6 +38,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -61,6 +62,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -82,6 +84,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -103,6 +106,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -119,6 +123,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }

@@ -17,12 +17,12 @@ namespace UniversityReact.API.BL
             {
                 List<Models.Course> courses = new List<Models.Course>();
                 var coursesDb = db.Courses.ToList();
-                if ( courses == null )
+                if (courses == null)
                 {
                     return courses;
                 }
 
-                foreach( Data.Courses course in coursesDb )
+                foreach (Data.Courses course in coursesDb)
                 {
                     courses.Add(new Models.Course
                     {
@@ -36,6 +36,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -56,6 +57,7 @@ namespace UniversityReact.API.BL
                 return courseModel;
             }catch( Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -75,6 +77,7 @@ namespace UniversityReact.API.BL
                 };
             }catch ( Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -93,6 +96,7 @@ namespace UniversityReact.API.BL
                 return course;
             } catch(Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -108,6 +112,7 @@ namespace UniversityReact.API.BL
                 return true;
             } catch(Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }

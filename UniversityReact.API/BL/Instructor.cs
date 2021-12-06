@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,6 +37,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -59,6 +61,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -80,6 +83,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -101,6 +105,7 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -117,7 +122,28 @@ namespace UniversityReact.API.BL
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
+            }
+        }
+
+        public async Task<bool> existsInstructorInOtherTable( int id )
+        {
+            try
+            {
+                var instructors = await (from instructor in db.Instructors
+                                         join officeAssignment in db.OfficesAssignment.DefaultIfEmpty() on instructor.ID equals officeAssignment.InstructorID
+                                         where officeAssignment.InstructorID != 0
+                                         select new Models.Instructor
+                                         {
+                                             ID = instructor.ID
+                                         }).FirstOrDefaultAsync();
+
+                return instructors != null;
+            } catch( Exception e)
+            {
+                Console.WriteLine(e);
+                return true;
             }
         }
     }

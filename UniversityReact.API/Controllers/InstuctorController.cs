@@ -27,6 +27,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -52,6 +53,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -69,6 +71,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -96,6 +99,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -111,6 +115,11 @@ namespace UniversityReact.API.Controllers
                     return BadRequest(BAD_REQUEST_ID);
                 }
 
+                if ( await instructor.existsInstructorInOtherTable(id) )
+                {
+                    return BadRequest("Existen registros de otras tablas relacionadas con el instructor que desea eliminar");
+                }
+
                 if (!instructor.DeleteInstructor(id))
                 {
                     return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
@@ -120,6 +129,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }

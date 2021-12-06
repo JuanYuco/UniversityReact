@@ -33,6 +33,7 @@ namespace UniversityReact.API.Controllers
                 return Ok(result);
             } catch(Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(e);
             }
         }
@@ -65,6 +66,7 @@ namespace UniversityReact.API.Controllers
                 });
             } catch ( Exception e )
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception("Ha ocurrido un error interno, por favor contacte con el administrador"));
             }
         }

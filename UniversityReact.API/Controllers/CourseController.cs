@@ -26,6 +26,7 @@ namespace UniversityReact.API.Controllers
                 return Ok(courses);
             }catch(Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -50,6 +51,7 @@ namespace UniversityReact.API.Controllers
                 return Ok(courseAdd);
             } catch( Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -66,6 +68,7 @@ namespace UniversityReact.API.Controllers
                 return Ok(result);
             } catch(Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -92,6 +95,7 @@ namespace UniversityReact.API.Controllers
                 return Ok(courseUpdate);
             } catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -115,6 +119,7 @@ namespace UniversityReact.API.Controllers
                 return Ok();
             } catch(Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }

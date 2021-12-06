@@ -27,6 +27,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -52,6 +53,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -69,6 +71,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -96,6 +99,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
@@ -120,6 +124,7 @@ namespace UniversityReact.API.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
             }
         }
