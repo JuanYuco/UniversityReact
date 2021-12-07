@@ -132,12 +132,15 @@ namespace UniversityReact.API.BL
             try
             {
                 var instructors = await (from instructor in db.Instructors
-                                         join officeAssignment in db.OfficesAssignment.DefaultIfEmpty() on instructor.ID equals officeAssignment.InstructorID
-                                         where officeAssignment.InstructorID != 0
+                                         join officeAssignment in db.OfficesAssignment on instructor.ID equals officeAssignment.InstructorID into off
+                                         from x in off.DefaultIfEmpty()
+                                         join department in db.Departments on instructor.ID equals department.InstructorID into dep
+                                         from d in dep.DefaultIfEmpty()
+                                         where x != null || d != null
                                          select new Models.Instructor
                                          {
                                              ID = instructor.ID
-                                         }).FirstOrDefaultAsync();
+                                         }).FirstOrDefaultAsync( x => x.ID == id );
 
                 return instructors != null;
             } catch( Exception e)

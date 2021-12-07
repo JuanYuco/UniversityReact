@@ -30,5 +30,6 @@ namespace UniversityReact.API.Data
         public virtual DbSet<Instructors> Instructors { get; set; }
         public virtual DbSet<Students> Students { get; set; }
         public virtual DbSet<OfficesAssignment> OfficesAssignment { get; set; }
+        public virtual DbSet<Departments> Departments { get; set; }
     }
 }

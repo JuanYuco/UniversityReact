@@ -14,11 +14,19 @@ namespace UniversityReact.API.Data
     
     public partial class Instructors
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Instructors()
+        {
+            this.Departments = new HashSet<Departments>();
+        }
+    
         public int ID { get; set; }
         public string LastName { get; set; }
         public string FirstMidName { get; set; }
         public Nullable<System.DateTime> HireDate { get; set; }
     
         public virtual OfficesAssignment OfficesAssignment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Departments> Departments { get; set; }
     }
 }
