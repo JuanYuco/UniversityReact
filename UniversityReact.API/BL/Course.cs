@@ -125,7 +125,9 @@ namespace UniversityReact.API.BL
                 var courses = await (from course in db.Courses
                                          join courseInstructor in db.CoursesInstructor on course.CourseID equals courseInstructor.CourseID into coin
                                          from ci in coin.DefaultIfEmpty()
-                                         where ci != null
+                                         join enrollment in db.Enrollments on course.CourseID equals enrollment.CourseID into enro
+                                         from en in enro.DefaultIfEmpty()
+                                         where ci != null || en != null
                                          select new Models.Course
                                          {
                                              CourseID = course.CourseID

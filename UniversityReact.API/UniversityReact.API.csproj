@@ -177,6 +177,7 @@
     <Compile Include="BL\Course.cs" />
     <Compile Include="BL\CourseInstructor.cs" />
     <Compile Include="BL\Department.cs" />
+    <Compile Include="BL\Enrollment.cs" />
     <Compile Include="BL\Instructor.cs" />
     <Compile Include="BL\OfficeAssignment.cs" />
     <Compile Include="BL\Student.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseInstructorController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\EnrollmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstuctorController.cs" />
     <Compile Include="Controllers\OfficeAssignmentController.cs" />
@@ -199,6 +201,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Departments.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Enrollments.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Instructors.cs">
@@ -234,6 +239,7 @@
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseInstructor.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Enrollment.cs" />
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\OfficeAssignment.cs" />
     <Compile Include="Models\Student.cs" />

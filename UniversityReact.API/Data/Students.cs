@@ -14,9 +14,18 @@ namespace UniversityReact.API.Data
     
     public partial class Students
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Students()
+        {
+            this.Enrollments = new HashSet<Enrollments>();
+        }
+    
         public int ID { get; set; }
         public string LastName { get; set; }
         public string FirstMidName { get; set; }
         public Nullable<System.DateTime> EnrollmentDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Enrollments> Enrollments { get; set; }
     }
 }

@@ -9,10 +9,10 @@ using System.Web.Http;
 namespace UniversityReact.API.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/CourseInstructor")]
-    public class CourseInstructorController : ApiController
+    [RoutePrefix("api/Enrollment")]
+    public class EnrollmentController : ApiController
     {
-        private BL.CourseInstructor courseInstructor = new BL.CourseInstructor();
+        private BL.Enrollment enrollment = new BL.Enrollment();
         private const string INTERNAL_SERVER_ERROR_MSG = "Hubo un error interno por favor contacte al administrador";
         private const string BAD_REQUEST_ID = "No existe registro con el id suministrado";
 
@@ -22,8 +22,8 @@ namespace UniversityReact.API.Controllers
         {
             try
             {
-                var departments = await courseInstructor.GetCourseInstructor();
-                return Ok(departments);
+                var enrollments = await enrollment.GetEnrollments();
+                return Ok(enrollments);
             }
             catch (Exception e)
             {
@@ -34,7 +34,7 @@ namespace UniversityReact.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public async Task<IHttpActionResult> Create(Models.CourseInstructor courseInstructorModel)
+        public async Task<IHttpActionResult> Create(Models.Enrollment enrollmentModel)
         {
             try
             {
@@ -43,18 +43,18 @@ namespace UniversityReact.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if ( await courseInstructor.existsCourseByOtherInstructor( courseInstructorModel.CourseID, null ) )
+                if (await enrollment.existsEnrollment(enrollmentModel.CourseID, enrollmentModel.StudentID, null) )
                 {
                     return BadRequest("El curso enviado ya tiene asignado un instructor");
                 }
 
-                var courseInstructorAdd = await courseInstructor.CreateCoursesInstructor(courseInstructorModel);
-                if (courseInstructorAdd == null)
+                var enrollmentAdd = await enrollment.CreateEnrollment(enrollmentModel);
+                if (enrollmentAdd == null)
                 {
                     return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
                 }
 
-                return Ok(courseInstructorAdd);
+                return Ok(enrollmentAdd);
             }
             catch (Exception e)
             {
@@ -69,7 +69,7 @@ namespace UniversityReact.API.Controllers
         {
             try
             {
-                var result = await courseInstructor.getCourseInstructorById(id);
+                var result = await enrollment.getEnrollmentById(id);
                 if (result == null) return BadRequest(BAD_REQUEST_ID);
 
                 return Ok(result);
@@ -87,7 +87,7 @@ namespace UniversityReact.API.Controllers
         {
             try
             {
-                var result = await courseInstructor.getCourseInstructorByCourse(id);
+                var result = await enrollment.getEnrollmentByCourse(id);
                 if (result == null) return BadRequest(BAD_REQUEST_ID);
 
                 return Ok(result);
@@ -100,12 +100,12 @@ namespace UniversityReact.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetByInstructor")]
-        public async Task<IHttpActionResult> GetByInstructor(int id)
+        [Route("GetByStudent")]
+        public async Task<IHttpActionResult> GetByStudent(int id)
         {
             try
             {
-                var result = await courseInstructor.getCourseInstructorByInstructor(id);
+                var result = await enrollment.getEnrollmentByStudent(id);
                 if (result == null) return BadRequest(BAD_REQUEST_ID);
 
                 return Ok(result);
@@ -119,7 +119,7 @@ namespace UniversityReact.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public async Task<IHttpActionResult> Update(Models.CourseInstructor courseInstructorModel)
+        public async Task<IHttpActionResult> Update(Models.Enrollment enrollmentModel)
         {
             try
             {
@@ -128,20 +128,20 @@ namespace UniversityReact.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await courseInstructor.getCourseInstructorById(courseInstructorModel.ID) == null)
+                if (await enrollment.getEnrollmentById(enrollmentModel.EnrollmentID) == null)
                 {
                     return BadRequest("No existe un registro con el id suministrado en el modelo");
                 }
 
-                if ( await courseInstructor.existsCourseByOtherInstructor( courseInstructorModel.CourseID, courseInstructorModel.ID ) )
+                if (await enrollment.existsEnrollment(enrollmentModel.CourseID, enrollmentModel.StudentID, enrollmentModel.EnrollmentID))
                 {
-                    return BadRequest("El curso suministrado ya tiene un instructor");
+                    return BadRequest("Ya existe otro registro con la misma información");
                 }
 
-                var courseInstructorUpdate = await courseInstructor.UpdateCoursesInstructor(courseInstructorModel);
-                if (courseInstructorUpdate == null) InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
+                var enrollmentUpdate = await enrollment.UpdateEnrollment(enrollmentModel);
+                if (enrollmentUpdate == null) InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
 
-                return Ok(courseInstructorUpdate);
+                return Ok(enrollmentUpdate);
             }
             catch (Exception e)
             {
@@ -156,12 +156,12 @@ namespace UniversityReact.API.Controllers
         {
             try
             {
-                if (await courseInstructor.getCourseInstructorById(id) == null)
+                if (await enrollment.getEnrollmentById(id) == null)
                 {
                     return BadRequest(BAD_REQUEST_ID);
                 }
 
-                if (!courseInstructor.DeleteCourseInstructor(id))
+                if (!enrollment.DeleteEnrollment(id))
                 {
                     return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));
                 }

@@ -31,6 +31,15 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="InstructorID" Type="int" />
         </EntityType>
+        <EntityType Name="Enrollments">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="Grade" Type="int" />
+        </EntityType>
         <EntityType Name="Instructors">
           <Key>
             <PropertyRef Name="ID" />
@@ -102,6 +111,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Enrollments_Course">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Student">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OfficesAssignment_Instructor">
           <End Role="Instructors" Type="Self.Instructors" Multiplicity="1" />
           <End Role="OfficesAssignment" Type="Self.OfficesAssignment" Multiplicity="0..1" />
@@ -118,6 +151,7 @@
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CoursesInstructor" EntityType="Self.CoursesInstructor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrollments" EntityType="Self.Enrollments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Instructors" EntityType="Self.Instructors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficesAssignment" EntityType="Self.OfficesAssignment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
@@ -133,6 +167,14 @@
           <AssociationSet Name="FK_Departments_Instructor" Association="Self.FK_Departments_Instructor">
             <End Role="Instructors" EntitySet="Instructors" />
             <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Course" Association="Self.FK_Enrollments_Course">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Student" Association="Self.FK_Enrollments_Student">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
           </AssociationSet>
           <AssociationSet Name="FK_OfficesAssignment_Instructor" Association="Self.FK_OfficesAssignment_Instructor">
             <End Role="Instructors" EntitySet="Instructors" />
@@ -167,6 +209,15 @@
             <End Role="Instructors" EntitySet="Instructors" />
             <End Role="CoursesInstructor" EntitySet="CoursesInstructor" />
           </AssociationSet>
+          <EntitySet Name="Enrollments" EntityType="UniversityReactModel.Enrollments" />
+          <AssociationSet Name="FK_Enrollments_Course" Association="UniversityReactModel.FK_Enrollments_Course">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Student" Association="UniversityReactModel.FK_Enrollments_Student">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Users">
           <Key>
@@ -186,6 +237,7 @@
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Credits" Type="Int32" />
           <NavigationProperty Name="CoursesInstructor" Relationship="UniversityReactModel.FK_CoursesInstructor_Course" FromRole="Courses" ToRole="CoursesInstructor" />
+          <NavigationProperty Name="Enrollments" Relationship="UniversityReactModel.FK_Enrollments_Course" FromRole="Courses" ToRole="Enrollments" />
         </EntityType>
         <EntityType Name="Instructors">
           <Key>
@@ -207,6 +259,7 @@
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FirstMidName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Enrollments" Relationship="UniversityReactModel.FK_Enrollments_Student" FromRole="Students" ToRole="Enrollments" />
         </EntityType>
         <EntityType Name="OfficesAssignment">
           <Key>
@@ -285,6 +338,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Enrollments">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="Grade" Type="Int32" />
+          <NavigationProperty Name="Courses" Relationship="UniversityReactModel.FK_Enrollments_Course" FromRole="Enrollments" ToRole="Courses" />
+          <NavigationProperty Name="Students" Relationship="UniversityReactModel.FK_Enrollments_Student" FromRole="Enrollments" ToRole="Students" />
+        </EntityType>
+        <Association Name="FK_Enrollments_Course">
+          <End Type="UniversityReactModel.Courses" Role="Courses" Multiplicity="0..1" />
+          <End Type="UniversityReactModel.Enrollments" Role="Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Student">
+          <End Type="UniversityReactModel.Students" Role="Students" Multiplicity="0..1" />
+          <End Type="UniversityReactModel.Enrollments" Role="Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -356,6 +444,16 @@
                 <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollments">
+            <EntityTypeMapping TypeName="UniversityReactModel.Enrollments">
+              <MappingFragment StoreEntitySet="Enrollments">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

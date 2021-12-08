@@ -147,6 +147,22 @@ namespace UniversityReact.API.BL
             }
         }
 
+        public async Task<bool> existsCourseByOtherInstructor( int coursesId, int ?id )
+        {
+            try
+            {
+                var courseInstructor = await db.CoursesInstructor
+                                                .Where(x => x.CourseID == coursesId && x.ID != id)
+                                                .FirstOrDefaultAsync();
+
+                return courseInstructor != null;
+            } catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return true;
+            }
+        }
+
         public List<Models.CourseInstructor> convert( List<Data.CoursesInstructor> coursesInstructorsData )
         {
             List<Models.CourseInstructor> courseInstructors = new List<Models.CourseInstructor>();

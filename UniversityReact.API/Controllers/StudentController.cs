@@ -115,6 +115,11 @@ namespace UniversityReact.API.Controllers
                     return BadRequest(BAD_REQUEST_ID);
                 }
 
+                if ( await student.existsStudentInOtherTable(id))
+                {
+                    return BadRequest("El estudiante se esta utilizando por lo tanto no se puede eliminar");
+                }
+
                 if (!student.DeleteStudent(id))
                 {
                     return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));

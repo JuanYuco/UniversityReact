@@ -16,6 +16,9 @@
         <EntityTypeShape EntityType="UniversityReactModel.CoursesInstructor" Width="1.5" PointX="9.375" PointY="0.75" />
         <AssociationConnector Association="UniversityReactModel.FK_CoursesInstructor_Course" />
         <AssociationConnector Association="UniversityReactModel.FK_CoursesInstructor_Instructor" />
+        <EntityTypeShape EntityType="UniversityReactModel.Enrollments" Width="1.5" PointX="9.875" PointY="4" />
+        <AssociationConnector Association="UniversityReactModel.FK_Enrollments_Course" />
+        <AssociationConnector Association="UniversityReactModel.FK_Enrollments_Student" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
