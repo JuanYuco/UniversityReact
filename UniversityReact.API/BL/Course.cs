@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -114,6 +115,28 @@ namespace UniversityReact.API.BL
             {
                 Console.WriteLine(e);
                 return false;
+            }
+        }
+
+        public async Task<bool> existsCourseInOtherTable(int id)
+        {
+            try
+            {
+                var courses = await (from course in db.Courses
+                                         join courseInstructor in db.CoursesInstructor on course.CourseID equals courseInstructor.CourseID into coin
+                                         from ci in coin.DefaultIfEmpty()
+                                         where ci != null
+                                         select new Models.Course
+                                         {
+                                             CourseID = course.CourseID
+                                         }).FirstOrDefaultAsync(x => x.CourseID == id);
+
+                return courses != null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return true;
             }
         }
     }

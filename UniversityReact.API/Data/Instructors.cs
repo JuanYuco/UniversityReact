@@ -18,6 +18,7 @@ namespace UniversityReact.API.Data
         public Instructors()
         {
             this.Departments = new HashSet<Departments>();
+            this.CoursesInstructor = new HashSet<CoursesInstructor>();
         }
     
         public int ID { get; set; }
@@ -28,5 +29,7 @@ namespace UniversityReact.API.Data
         public virtual OfficesAssignment OfficesAssignment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Departments> Departments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CoursesInstructor> CoursesInstructor { get; set; }
     }
 }

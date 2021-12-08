@@ -12,19 +12,13 @@ namespace UniversityReact.API.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Courses
+    public partial class CoursesInstructor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Courses()
-        {
-            this.CoursesInstructor = new HashSet<CoursesInstructor>();
-        }
-    
+        public int ID { get; set; }
         public int CourseID { get; set; }
-        public string Title { get; set; }
-        public Nullable<int> Credits { get; set; }
+        public int InstructorID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CoursesInstructor> CoursesInstructor { get; set; }
+        public virtual Courses Courses { get; set; }
+        public virtual Instructors Instructors { get; set; }
     }
 }

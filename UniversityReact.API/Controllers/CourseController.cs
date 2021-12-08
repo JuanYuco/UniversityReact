@@ -111,6 +111,11 @@ namespace UniversityReact.API.Controllers
                     return BadRequest(BAD_REQUEST_ID);
                 }
 
+                if ( await course.existsCourseInOtherTable(id) )
+                {
+                    return BadRequest("El curso que desea eliminar se esta utilizando");
+                }
+
                 if ( !course.DeleteCourse(id) )
                 {
                     return InternalServerError(new Exception(INTERNAL_SERVER_ERROR_MSG));

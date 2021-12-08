@@ -136,7 +136,9 @@ namespace UniversityReact.API.BL
                                          from x in off.DefaultIfEmpty()
                                          join department in db.Departments on instructor.ID equals department.InstructorID into dep
                                          from d in dep.DefaultIfEmpty()
-                                         where x != null || d != null
+                                         join courseInstructor in db.CoursesInstructor on instructor.ID equals courseInstructor.InstructorID into coin
+                                         from ci in coin.DefaultIfEmpty()
+                                         where x != null || d != null || ci != null
                                          select new Models.Instructor
                                          {
                                              ID = instructor.ID

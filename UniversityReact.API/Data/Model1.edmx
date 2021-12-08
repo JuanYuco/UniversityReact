@@ -13,6 +13,14 @@
           <Property Name="Title" Type="varchar" MaxLength="50" />
           <Property Name="Credits" Type="int" />
         </EntityType>
+        <EntityType Name="CoursesInstructor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="InstructorID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Departments">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -58,6 +66,30 @@
           <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CoursesInstructor_Course">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="CoursesInstructor" Type="Self.CoursesInstructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="CoursesInstructor">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CoursesInstructor_Instructor">
+          <End Role="Instructors" Type="Self.Instructors" Multiplicity="1" />
+          <End Role="CoursesInstructor" Type="Self.CoursesInstructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CoursesInstructor">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Departments_Instructor">
           <End Role="Instructors" Type="Self.Instructors" Multiplicity="0..1" />
           <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
@@ -84,11 +116,20 @@
         </Association>
         <EntityContainer Name="UniversityReactModelStoreContainer">
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CoursesInstructor" EntityType="Self.CoursesInstructor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Instructors" EntityType="Self.Instructors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficesAssignment" EntityType="Self.OfficesAssignment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CoursesInstructor_Course" Association="Self.FK_CoursesInstructor_Course">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="CoursesInstructor" EntitySet="CoursesInstructor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CoursesInstructor_Instructor" Association="Self.FK_CoursesInstructor_Instructor">
+            <End Role="Instructors" EntitySet="Instructors" />
+            <End Role="CoursesInstructor" EntitySet="CoursesInstructor" />
+          </AssociationSet>
           <AssociationSet Name="FK_Departments_Instructor" Association="Self.FK_Departments_Instructor">
             <End Role="Instructors" EntitySet="Instructors" />
             <End Role="Departments" EntitySet="Departments" />
@@ -117,6 +158,15 @@
             <End Role="Instructors" EntitySet="Instructors" />
             <End Role="Departments" EntitySet="Departments" />
           </AssociationSet>
+          <EntitySet Name="CoursesInstructor" EntityType="UniversityReactModel.CoursesInstructor" />
+          <AssociationSet Name="FK_CoursesInstructor_Course" Association="UniversityReactModel.FK_CoursesInstructor_Course">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="CoursesInstructor" EntitySet="CoursesInstructor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CoursesInstructor_Instructor" Association="UniversityReactModel.FK_CoursesInstructor_Instructor">
+            <End Role="Instructors" EntitySet="Instructors" />
+            <End Role="CoursesInstructor" EntitySet="CoursesInstructor" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Users">
           <Key>
@@ -135,6 +185,7 @@
           <Property Name="CourseID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Credits" Type="Int32" />
+          <NavigationProperty Name="CoursesInstructor" Relationship="UniversityReactModel.FK_CoursesInstructor_Course" FromRole="Courses" ToRole="CoursesInstructor" />
         </EntityType>
         <EntityType Name="Instructors">
           <Key>
@@ -146,6 +197,7 @@
           <Property Name="HireDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="OfficesAssignment" Relationship="UniversityReactModel.FK_OfficesAssignment_Instructor" FromRole="Instructors" ToRole="OfficesAssignment" />
           <NavigationProperty Name="Departments" Relationship="UniversityReactModel.FK_Departments_Instructor" FromRole="Instructors" ToRole="Departments" />
+          <NavigationProperty Name="CoursesInstructor" Relationship="UniversityReactModel.FK_CoursesInstructor_Instructor" FromRole="Instructors" ToRole="CoursesInstructor" />
         </EntityType>
         <EntityType Name="Students">
           <Key>
@@ -195,6 +247,40 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Departments">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CoursesInstructor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="InstructorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Courses" Relationship="UniversityReactModel.FK_CoursesInstructor_Course" FromRole="CoursesInstructor" ToRole="Courses" />
+          <NavigationProperty Name="Instructors" Relationship="UniversityReactModel.FK_CoursesInstructor_Instructor" FromRole="CoursesInstructor" ToRole="Instructors" />
+        </EntityType>
+        <Association Name="FK_CoursesInstructor_Course">
+          <End Type="UniversityReactModel.Courses" Role="Courses" Multiplicity="1" />
+          <End Type="UniversityReactModel.CoursesInstructor" Role="CoursesInstructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="CoursesInstructor">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CoursesInstructor_Instructor">
+          <End Type="UniversityReactModel.Instructors" Role="Instructors" Multiplicity="1" />
+          <End Type="UniversityReactModel.CoursesInstructor" Role="CoursesInstructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CoursesInstructor">
               <PropertyRef Name="InstructorID" />
             </Dependent>
           </ReferentialConstraint>
@@ -261,6 +347,15 @@
                 <ScalarProperty Name="Budget" ColumnName="Budget" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CoursesInstructor">
+            <EntityTypeMapping TypeName="UniversityReactModel.CoursesInstructor">
+              <MappingFragment StoreEntitySet="CoursesInstructor">
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
