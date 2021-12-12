@@ -5,10 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace UniversityReact.API.Controllers
 {
     [RoutePrefix("api/Auth")]
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class UserController : ApiController
     {
         private BL.User usuario = new BL.User();
