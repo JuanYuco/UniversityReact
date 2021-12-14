@@ -45,6 +45,18 @@ namespace UniversityReact.API.BL
             }
         }
 
+        public async Task<Data.Users> getUserByEmail( string email )
+        {
+            try
+            {
+                var user = await db.Users.FirstOrDefaultAsync( x => x.email == email );
+                return user;
+            } catch( Exception e ){
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
         public async Task<Models.User> getUserByEmailAndPassword ( string email, string password )
         {
             try

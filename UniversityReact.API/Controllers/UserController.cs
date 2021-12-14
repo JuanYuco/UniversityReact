@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -64,6 +65,32 @@ namespace UniversityReact.API.Controllers
                     name = loginResult.name,
                     lastName = loginResult.lastName,
                     email = loginResult.email,
+                    token = token
+                });
+            } catch ( Exception e )
+            {
+                Console.WriteLine(e);
+                return InternalServerError(new Exception("Ha ocurrido un error interno, por favor contacte con el administrador"));
+            }
+        }
+
+        [HttpGet]
+        [Route("Validate")]
+        [Authorize]
+        public async Task<IHttpActionResult> Validate ( string token )
+        {
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadJwtToken(token);
+                string email = (string)jsonToken.Payload.First(claim => claim.Key == "email").Value;
+                var userData = await usuario.getUserByEmail(email);
+                return Ok(new Models.View_Models.LoginViewModelReturn
+                {
+                    id = userData.id,
+                    name = userData.name,
+                    lastName = userData.lastName,
+                    email = userData.email,
                     token = token
                 });
             } catch ( Exception e )
