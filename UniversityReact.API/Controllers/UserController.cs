@@ -77,10 +77,12 @@ namespace UniversityReact.API.Controllers
         [HttpGet]
         [Route("Validate")]
         [Authorize]
-        public async Task<IHttpActionResult> Validate ( string token )
+        public async Task<IHttpActionResult> Validate ()
         {
             try
             {
+                string token = Request.Headers.GetValues("Authorization").First();
+                token = token.Replace("Bearer ", "");
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadJwtToken(token);
                 string email = (string)jsonToken.Payload.First(claim => claim.Key == "email").Value;
@@ -93,7 +95,8 @@ namespace UniversityReact.API.Controllers
                     email = userData.email,
                     token = token
                 });
-            } catch ( Exception e )
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 return InternalServerError(new Exception("Ha ocurrido un error interno, por favor contacte con el administrador"));
