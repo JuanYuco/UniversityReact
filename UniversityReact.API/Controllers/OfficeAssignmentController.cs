@@ -5,11 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace UniversityReact.API.Controllers
 {
     [Authorize]
     [RoutePrefix("api/OfficeAssignment")]
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class OfficeAssignmentController : ApiController
     {
         private BL.OfficeAssignment officeAssignment = new BL.OfficeAssignment();
